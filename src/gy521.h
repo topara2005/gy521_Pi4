@@ -1,6 +1,6 @@
 
-#ifndef DEF_SENSOR
-#define DEF_SENSOR
+#ifndef DEF_GY521_H
+#define DEF_GH521_H
 
 #define MPU6050_GYRO_XOUT_H        0x43   // R
 #define MPU6050_GYRO_YOUT_H        0x45   // R
@@ -12,6 +12,9 @@
 
 #define MPU6050_PWR_MGMT_1         0x6B   // R/W
 #define MPU6050_I2C_ADDRESS        0x68   // I2C
+#define MPU6050_GYRO_CONFIG        0x1B
+#define MPU6050_ACCEL_CONFIG       0x1C
+#define MPU6050_WHO_AM_I           0x75
 
 
 
@@ -26,7 +29,9 @@ class MPU6050
 {
   public:
     MPU6050();
+    MPU6050(int adapterNumber);
     void initGyro();
+   bool isConnected();
     int8_t getGyroX();
     int8_t getGyroY();
     int8_t getGyroZ();
@@ -40,6 +45,7 @@ class MPU6050
   private:
     int fd;
     int I2CAddress;
+    int adapterNumber=1;
 
     int8_t x_gyro;
     int8_t y_gyro;
