@@ -23,8 +23,8 @@ public:
     ~I2C_device();
     virtual int openBus();
     int setSlaveAddress(int bus);
-    int write(uint8_t address, uint8_t *data, int length);
-    int read(uint8_t address, uint8_t *data, int length);
+    int write( uint8_t *data, int length);
+    int read(uint8_t *data, int length);
     int read_reg(uint8_t address, uint8_t reg, uint8_t *data, int length);
 protected:
     int fd;
@@ -34,6 +34,7 @@ protected:
 
 I2C_device::I2C_device(int bus)
 {
+     fd = -1;
      snprintf(filename, 64, "%s%d", I2C_NODE, bus);
 }
 
@@ -95,16 +96,18 @@ I2C_device::setSlaveAddress(int address)
     return ret;
 }
 ///     /brief I2C_device::write  write to the device   
-/// \param address  address of the device   
-/// \param data  data to write  
+/// \param data  data to write . Normally, the first byte contains the address of the register to write to
 /// \param length  length of data
-I2C_device::write(uint8_t address, uint8_t *data, int length)
+I2C_device::write( uint8_t *data, int length)
 {
     int ret = write(fd, data, length);
     if (ret < 0)
         printf("Failed to write to the i2c bus.\n");
     return ret;
 }
+///    /brief I2C_device::read  read from the device        
+/// \param data  buffer to read into
+/// \param length  length of data
 I2C_device::read( uint8_t *data, int length)
 {
     int ret = read(fd, data, length);

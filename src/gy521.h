@@ -24,8 +24,9 @@
 #include <linux/i2c-dev.h>
 //#include <i2c/smbus.h>
 #include <sys/ioctl.h>
+#include "I2C_device.h"
 
-class MPU6050
+class MPU6050:public  I2C_device
 {
   public:
     MPU6050();
@@ -43,7 +44,6 @@ class MPU6050
     float getAngleZ();
 
   private:
-    int fd;
     int I2CAddress;
     int adapterNumber=1;
 
