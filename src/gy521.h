@@ -19,7 +19,8 @@
 #include <stdint.h>
 // SOURCE: https://www.kernel.org/doc/Documentation/i2c/dev-interface
 #include <linux/i2c-dev.h>
-#include <i2c/smbus.h>
+//#include <i2c/smbus.h>
+#include <sys/ioctl.h>
 
 class MPU6050
 {
